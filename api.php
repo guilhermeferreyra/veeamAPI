@@ -11,7 +11,7 @@ if(strcasecmp($contentType, 'application/json') != 0){
 $content = trim(file_get_contents("php://input"));
 $decoded = json_decode($content);
 
-var_dump($decoded);
+#var_dump($decoded);
 
 #if(!is_array($decoded)){
 #    throw new Exception('Received content contained invalid JSON!');
@@ -44,6 +44,8 @@ $data_read = $decoded->Data_Read;
 $data_transferred = $decoded->Transferred;
 $data_dedupe = $decoded->DedupeRate;
 $data_compress = $decoded->CompressionRate;
+
+echo $job_name."\n";
 
 
 populateDb($job_name, $customer, $state, $start_time, $end_time, $duration, $avg_speed, $data_processed, $data_total, $data_read, $data_transferred, $data_dedupe, $data_compress);
