@@ -1,8 +1,8 @@
 <?php
 function pdo_connect_mysql() {
     $DATABASE_HOST = 'localhost';
-    $DATABASE_USER = 'infiniit';
-    $DATABASE_PASS = '1nfini!T';
+    $DATABASE_USER = 'root';
+    $DATABASE_PASS = '';
     $DATABASE_NAME = 'veeam_api';
     try {
     	return new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
