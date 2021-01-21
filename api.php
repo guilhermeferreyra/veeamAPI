@@ -16,12 +16,19 @@ $decoded = json_decode($content);
 #}
 
 // Função para conexão com banco de dados.
-function conexaoPDO(){	
-    #Iniciando conexão com banco de dados
-    $pdo = new PDO ('localhost:dbname=veeam_api','infiniit', '1nfini!T');
-    $pdo->setattribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-    return $pdo;
+
+function conexaoPDO() {
+    $DATABASE_HOST = 'localhost';
+    $DATABASE_USER = 'infiniit';
+    $DATABASE_PASS = '1nfini!T';
+    $DATABASE_NAME = 'veeam_api';
+    try {
+    	return new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
+    } catch (PDOException $exception) {
+    	exit('Failed to connect to database!');
+    }
 }
+
 echo $content."\n";
 echo "================================\n";
 var_dump($decoded);
@@ -41,8 +48,6 @@ $data_dedupe = $decoded->DedupeRate;
 $data_compress = $decoded->CompressionRate;
 
 
-
-conexaoPDO();
 populateDb($job_name, $customer, $state, $start_time, $end_time, $duration, $avg_speed, $data_processed, $data_total, $data_read, $data_transferred, $data_dedupe, $data_compress);
 
 function populateDb($job_name, $customer, $state, $start_time, $end_time, $duration, $avg_speed, $data_processed, $data_total, $data_read, $data_transferred, $data_dedupe, $data_compress){ 
