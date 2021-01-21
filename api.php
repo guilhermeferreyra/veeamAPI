@@ -11,9 +11,9 @@ if(strcasecmp($contentType, 'application/json') != 0){
 $content = trim(file_get_contents("php://input"));
 $decoded = json_decode($content);
 
-if(!is_array($decoded)){
-    throw new Exception('Received content contained invalid JSON!');
-}
+#if(!is_array($decoded)){
+#    throw new Exception('Received content contained invalid JSON!');
+#}
 
 // Função para conexão com banco de dados.
 function conexaoPDO(){	
