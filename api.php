@@ -25,11 +25,10 @@ function conexaoPDO(){
 var_dump($decoded);
 
 #$job_name = $decoded->'Job Name';
-$job_name = $decoded->"JOB_NAME";
 $customer = $decoded->Customer;
 $state = $decoded->State;
-$start_time = $decoded->Start_Time;
-$end_time = $decoded->Stop_Time;
+$start_time = $decoded->Start_Time->DateTime;
+$end_time = $decoded->Stop_Time->DateTime;
 $duration = $decoded->Duration;
 $avg_speed = $decoded->Avg_Speed;
 $data_processed = $decoded->Processed;
@@ -38,6 +37,7 @@ $data_read = $decoded->Data_Read;
 $data_transferred = $decoded->Transferred;
 $data_dedupe = $decoded->DedupeRate;
 $data_compress = $decoded->CompressionRate;
+
 
 
 conexaoPDO();
