@@ -5,7 +5,7 @@ Add-PSSnapin VeeamPSSnapIn
 $HourstoCheck = 24
 
 $allSess = Get-VBRBackupSession
-
+<#
 $PreviousDay = [DateTime]::Now.AddHours(-$HourstoCheck)
 $sessions = Get-VBRBackupSession | Where-Object {($_.EndTime -gt $PreviousDay -or $_.StartTime -gt $PreviousDay)}
 foreach($session in $sessions){
@@ -16,8 +16,8 @@ foreach($session in $sessions){
   $endTime = $session.Progress.StopTimeLocal
   $duration = $session.Progress.Duration.TotalSeconds
   $backupSize = $session.BackupStats.BackupSize
-  
-  $sessListBk = @($allSess | ?{($_.EndTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.CreationTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.State -eq "Working") -and $_.JobType -eq "Backup"})
+  #>
+  $sessListBk = @($allSess | Where-Object {($_.EndTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.CreationTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.State -eq "Working") -and $_.JobType -eq "Backup"})
   
   $arrAllSessBk = $sessListBk | Sort-Object -Property Creationtime | Select-Object -Property @{Name="Job Name"; Expression = {$_.Name}},
         @{Name="State"; Expression = {$_.State}},
@@ -38,7 +38,7 @@ foreach($session in $sessions){
         @{Name="Details"; Expression = {($_.GetDetails()).Replace("<br />","ZZbrZZ")}}, Result
         
              
-}
+#}
 
 foreach($data in $arrAllSessBk){
   [array]$json = $data | ConvertTo-Json
@@ -57,7 +57,7 @@ function Get-Duration {
   }
   "{0}{1}:{2,2:D2}:{3,2:D2}" -f $days,$ts.Hours,$ts.Minutes,$ts.Seconds
 }
-
+<#
 function Get-BackupSize {
   param ($backups)
   $outputObj = @()
@@ -86,3 +86,4 @@ function Get-BackupSize {
   }
   $outputObj
 }
+#>
