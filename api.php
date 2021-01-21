@@ -37,9 +37,11 @@ $data_transferred = $decoded=>'Transferred';
 $data_dedupe = $decoded=>'DedupeRate';
 $data_compress = $decoded=>'CompressionRate';
 
-inserirEditora($job_name, $customer, $state, $start_time, $end_time, $duration, $avg_speed, $data_processed, $data_total, $data_read, $data_transferred, $data_dedupe, $data_compress)
 
-function inserirEditora($job_name, $customer, $state, $start_time, $end_time, $duration, $avg_speed, $data_processed, $data_total, $data_read, $data_transferred, $data_dedupe, $data_compress){ 
+conexaoPDO();
+populateDb($job_name, $customer, $state, $start_time, $end_time, $duration, $avg_speed, $data_processed, $data_total, $data_read, $data_transferred, $data_dedupe, $data_compress);
+
+function populateDb($job_name, $customer, $state, $start_time, $end_time, $duration, $avg_speed, $data_processed, $data_total, $data_read, $data_transferred, $data_dedupe, $data_compress){ 
     $pdo = conexaoPDO();
     $stmt = $pdo->prepare('
         INSERT INTO veeam_api(
@@ -90,5 +92,5 @@ function inserirEditora($job_name, $customer, $state, $start_time, $end_time, $d
     $stmt->execute();
     
     return $pdo->lastInsertId();
-}	
+}
 ?>
