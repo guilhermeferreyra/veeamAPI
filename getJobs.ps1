@@ -1,26 +1,29 @@
 Add-PSSnapin VeeamPSSnapIn
 
-#Connect-VBRServer -Server denver -Credential (Import-CliXml -Path 'C:\Users\guilherme.ferreira\cred.txt')
+$veeamDeployment = "Infiniit Dom Pedro" # Vulgo Cliente
+
+#Connect-VBRServer -Server denver -Credential (Import-CliXml -Path 'PathToCred\cred.txt')
 
 $HourstoCheck = 24
 
 $allSess = Get-VBRBackupSession
 <#
-$PreviousDay = [DateTime]::Now.AddHours(-$HourstoCheck)
-$sessions = Get-VBRBackupSession | Where-Object {($_.EndTime -gt $PreviousDay -or $_.StartTime -gt $PreviousDay)}
-foreach($session in $sessions){
-  $lastResult = Get-VBRJob | Where-Object {$_.Name -eq $session.JobName}
-  $lastResult = $lastResult.Info.LatestStatus
-  $sessionStatus = $session.Result
-  $startTime = $session.Progress.StartTimeLocal
-  $endTime = $session.Progress.StopTimeLocal
-  $duration = $session.Progress.Duration.TotalSeconds
-  $backupSize = $session.BackupStats.BackupSize
+    $PreviousDay = [DateTime]::Now.AddHours(-$HourstoCheck)
+    $sessions = Get-VBRBackupSession | Where-Object {($_.EndTime -gt $PreviousDay -or $_.StartTime -gt $PreviousDay)}
+    foreach($session in $sessions){
+    $lastResult = Get-VBRJob | Where-Object {$_.Name -eq $session.JobName}
+    $lastResult = $lastResult.Info.LatestStatus
+    $sessionStatus = $session.Result
+    $startTime = $session.Progress.StartTimeLocal
+    $endTime = $session.Progress.StopTimeLocal
+    $duration = $session.Progress.Duration.TotalSeconds
+    $backupSize = $session.BackupStats.BackupSize
   #>
   $sessListBk = @($allSess | Where-Object {($_.EndTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.CreationTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.State -eq "Working") -and $_.JobType -eq "Backup"})
   
   $arrAllSessBk = $sessListBk | Sort-Object -Property Creationtime | Select-Object -Property @{Name="Job Name"; Expression = {$_.Name}},
         @{Name="State"; Expression = {$_.State}},
+        @{Name="Customer"; Expression = {$veeamDeployment}},
         @{Name="Start Time"; Expression = {$_.CreationTime}},
         @{Name="Stop Time"; Expression = {If ($_.EndTime -eq "1/1/1900 12:00:00 AM"){"-"} Else {$_.EndTime}}},
         @{Name="Duration (HH:MM:SS)"; Expression = {Get-Duration -ts $_.Progress.Duration}},                    
@@ -41,10 +44,9 @@ foreach($session in $sessions){
 #}
 
 foreach($data in $arrAllSessBk){
-  [array]$json = $data | ConvertTo-Json
-    
-  $post = Invoke-WebRequest -Uri http://localhost/veeamAPI/api.php -Method Post -Body $json -ContentType 'application/json' 
-  $post
+  $teste = ($data | ConvertTo-Json)
+  $post = Invoke-WebRequest -Uri http://localhost/veeamAPI/api.php -Method Post -Body ($data | ConvertTo-Json) -ContentType 'application/json'
+  $teste
 }
 
 
@@ -58,10 +60,10 @@ function Get-Duration {
   "{0}{1}:{2,2:D2}:{3,2:D2}" -f $days,$ts.Hours,$ts.Minutes,$ts.Seconds
 }
 <#
-function Get-BackupSize {
-  param ($backups)
-  $outputObj = @()
-  Foreach ($backup in $backups) {
+    function Get-BackupSize {
+    param ($backups)
+    $outputObj = @()
+    Foreach ($backup in $backups) {
     $backupSize = 0
     $dataSize = 0
     $files = $backup.GetAllStorages()
@@ -83,7 +85,7 @@ function Get-BackupSize {
     }
     $vbrMasterObj = New-Object -TypeName PSObject -Property $vbrMasterHash
     $outputObj += $vbrMasterObj
-  }
-  $outputObj
-}
+    }
+    $outputObj
+    }
 #>
