@@ -11,7 +11,7 @@ if(strcasecmp($contentType, 'application/json') != 0){
 $content = trim(file_get_contents("php://input"));
 $decoded = json_decode($content);
 
-var_dump($decoded)
+var_dump($decoded);
 
 #if(!is_array($decoded)){
 #    throw new Exception('Received content contained invalid JSON!');
