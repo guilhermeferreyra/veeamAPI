@@ -29,10 +29,6 @@ function conexaoPDO() {
     }
 }
 
-echo $content."\n";
-echo "================================\n";
-var_dump($decoded);
-
 $job_name = $decoded->JobName;
 $customer = $decoded->Customer;
 $state = $decoded->Result;
