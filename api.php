@@ -23,11 +23,12 @@ function conexaoPDO(){
     return $pdo;
 }
 echo $content."\n";
+echo "================================";
 var_dump($decoded);
 
 $job_name = $decoded->JobName;
 $customer = $decoded->Customer;
-$state = $decoded->State;
+$state = $decoded->Result;
 $start_time = $decoded->Start_Time->DateTime;
 $end_time = $decoded->Stop_Time->DateTime;
 $duration = $decoded->Duration;
