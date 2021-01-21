@@ -22,6 +22,7 @@ function conexaoPDO(){
     $pdo->setattribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
     return $pdo;
 }
+echo $content."\n";
 var_dump($decoded);
 
 $job_name = $decoded->JobName;
