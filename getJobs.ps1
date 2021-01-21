@@ -4,7 +4,7 @@ $veeamDeployment = "Infiniit Dom Pedro" # Vulgo Cliente
 
 #Connect-VBRServer -Server denver -Credential (Import-CliXml -Path 'PathToCred\cred.txt')
 
-$HourstoCheck = 24
+$HourstoCheck = 72
 
 $allSess = Get-VBRBackupSession
 <#
@@ -23,19 +23,20 @@ $allSess = Get-VBRBackupSession
   
   $arrAllSessBk = $sessListBk | Sort-Object -Property Creationtime | Select-Object -Property @{Name="Job Name"; Expression = {$_.Name}},
         @{Name="State"; Expression = {$_.State}},
+        @{Name="JobName"; Expression = {$_.OrigJobName}},
         @{Name="Customer"; Expression = {$veeamDeployment}},
-        @{Name="Start Time"; Expression = {$_.CreationTime}},
-        @{Name="Stop Time"; Expression = {If ($_.EndTime -eq "1/1/1900 12:00:00 AM"){"-"} Else {$_.EndTime}}},
-        @{Name="Duration (HH:MM:SS)"; Expression = {Get-Duration -ts $_.Progress.Duration}},                    
-        @{Name="Avg Speed (MB/s)"; Expression = {[Math]::Round($_.Progress.AvgSpeed/1MB,2)}},
-        @{Name="Total (GB)"; Expression = {[Math]::Round($_.Progress.ProcessedSize/1GB,2)}},
-        @{Name="Processed (GB)"; Expression = {[Math]::Round($_.Progress.ProcessedUsedSize/1GB,2)}},
-        @{Name="Data Read (GB)"; Expression = {[Math]::Round($_.Progress.ReadSize/1GB,2)}},
-        @{Name="Transferred (GB)"; Expression = {[Math]::Round($_.Progress.TransferedSize/1GB,2)}},
-        @{Name="Dedupe"; Expression = {
+        @{Name="Start_Time"; Expression = {$_.CreationTime}},
+        @{Name="Stop_Time"; Expression = {If ($_.EndTime -eq "1/1/1900 12:00:00 AM"){"-"} Else {$_.EndTime}}},
+        @{Name="Duration"; Expression = {Get-Duration -ts $_.Progress.Duration}},                    
+        @{Name="Avg_Speed"; Expression = {[Math]::Round($_.Progress.AvgSpeed/1MB,2)}},
+        @{Name="Total"; Expression = {[Math]::Round($_.Progress.ProcessedSize/1GB,2)}},
+        @{Name="Processed"; Expression = {[Math]::Round($_.Progress.ProcessedUsedSize/1GB,2)}},
+        @{Name="Data_Read"; Expression = {[Math]::Round($_.Progress.ReadSize/1GB,2)}},
+        @{Name="Transferred"; Expression = {[Math]::Round($_.Progress.TransferedSize/1GB,2)}},
+        @{Name="DedupeRate"; Expression = {
           If ($_.Progress.ReadSize -eq 0) {0}
           Else {([string][Math]::Round($_.BackupStats.GetDedupeX(),1)) +"x"}}},
-        @{Name="Compression"; Expression = {
+        @{Name="CompressionRate"; Expression = {
           If ($_.Progress.ReadSize -eq 0) {0}
           Else {([string][Math]::Round($_.BackupStats.GetCompressX(),1)) +"x"}}},
         @{Name="Details"; Expression = {($_.GetDetails()).Replace("<br />","ZZbrZZ")}}, Result
