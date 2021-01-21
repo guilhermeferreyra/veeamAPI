@@ -85,7 +85,7 @@ function populateDb($job_name, $customer, $state, $start_time, $end_time, $durat
     );
 
     $stmt->bindValue(":customer", $customer);
-    $$stmt->bindValue(":state", $state);
+    $stmt->bindValue(":state", $state);
     $stmt->bindValue(":start_time", $start_time);
     $stmt->bindValue(":end_time", $end_time);
     $stmt->bindValue(":duration", $duration);
