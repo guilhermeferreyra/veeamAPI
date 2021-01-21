@@ -23,7 +23,7 @@ function conexaoPDO(){
     return $pdo;
 }
 
-$job_name = $decoded->"Job Name";
+$job_name = $decoded->'Job Name';
 $customer = $decoded->'Customer';
 $state = $decoded->'State';
 $start_time = $decoded->'Start_Time';
