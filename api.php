@@ -26,18 +26,18 @@ var_dump($decoded);
 
 #$job_name = $decoded->'Job Name';
 $job_name = $decoded->"JOB_NAME";
-$customer = $decoded->'Customer';
-$state = $decoded->'State';
-$start_time = $decoded->'Start_Time';
-$end_time = $decoded->'Stop_Time';
-$duration = $decoded->'Duration';
-$avg_speed = $decoded->'Avg_Speed';
-$data_processed = $decoded->'Processed';
-$data_total = $decoded->'Customer';
-$data_read = $decoded->'Data_Read';
-$data_transferred = $decoded->'Transferred';
-$data_dedupe = $decoded->'DedupeRate';
-$data_compress = $decoded->'CompressionRate';
+$customer = $decoded->Customer;
+$state = $decoded->State;
+$start_time = $decoded->Start_Time;
+$end_time = $decoded->Stop_Time;
+$duration = $decoded->Duration;
+$avg_speed = $decoded->Avg_Speed;
+$data_processed = $decoded->Processed;
+$data_total = $decoded->Customer;
+$data_read = $decoded->Data_Read;
+$data_transferred = $decoded->Transferred;
+$data_dedupe = $decoded->DedupeRate;
+$data_compress = $decoded->CompressionRate;
 
 
 conexaoPDO();
@@ -78,18 +78,18 @@ function populateDb($job_name, $customer, $state, $start_time, $end_time, $durat
     );
 
     $stmt->bindValue(":customer", $customer);
-    $$stmt->bindValue(":state", $state
-    $stmt->bindValue(":start_time", $start_time
-    $stmt->bindValue(":end_time", $end_time
-    $stmt->bindValue(":duration", $duration
-    $stmt->bindValue(":avg_speed", $avg_speed
-    $stmt->bindValue(":data_processed", $data_processed
-    $stmt->bindValue(":data_total", $data_total
-    $stmt->bindValue(":data_read", $data_read
-    $stmt->bindValue(":data_transferred", $data_transferred
-    $stmt->bindValue(":data_dedupe", $data_dedupe
-    $stmt->bindValue(":data_compress", $data_compress
-    $stmt->bindValue(":job_name", $job_name
+    $$stmt->bindValue(":state", $state);
+    $stmt->bindValue(":start_time", $start_time);
+    $stmt->bindValue(":end_time", $end_time);
+    $stmt->bindValue(":duration", $duration);
+    $stmt->bindValue(":avg_speed", $avg_speed);
+    $stmt->bindValue(":data_processed", $data_processed);
+    $stmt->bindValue(":data_total", $data_total);
+    $stmt->bindValue(":data_read", $data_read);
+    $stmt->bindValue(":data_transferred", $data_transferred);
+    $stmt->bindValue(":data_dedupe", $data_dedupe);
+    $stmt->bindValue(":data_compress", $data_compress);
+    $stmt->bindValue(":job_name", $job_name);
 
     $stmt->execute();
     
