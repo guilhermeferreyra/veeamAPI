@@ -45,7 +45,7 @@ $allSess = Get-VBRBackupSession
 
 foreach($data in $arrAllSessBk){
   $teste = ($data | ConvertTo-Json)
-  $post = Invoke-WebRequest -Uri http://localhost/veeamAPI/api.php -Method Post -Body ($data | ConvertTo-Json) -ContentType 'application/json'
+  Invoke-WebRequest -Uri http://localhost/veeamAPI/api.php -Method Post -Body ($data | ConvertTo-Json) -ContentType 'application/json'
   $teste
 }
 
