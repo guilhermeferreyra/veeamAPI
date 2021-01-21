@@ -23,20 +23,19 @@ function conexaoPDO(){
     return $pdo;
 }
 
-#$job_name = $decoded=>"Job Name";
-$job_name = "JOB_NAME";
-$customer = $decoded=>'Customer';
-$state = $decoded=>'State';
-$start_time = $decoded=>'Start_Time';
-$end_time = $decoded=>'Stop_Time';
-$duration = $decoded=>'Duration';
-$avg_speed = $decoded=>'Avg_Speed';
-$data_processed = $decoded=>'Processed';
-$data_total = $decoded=>'Customer';
-$data_read = $decoded=>'Data_Read';
-$data_transferred = $decoded=>'Transferred';
-$data_dedupe = $decoded=>'DedupeRate';
-$data_compress = $decoded=>'CompressionRate';
+$job_name = $decoded->"Job Name";
+$customer = $decoded->'Customer';
+$state = $decoded->'State';
+$start_time = $decoded->'Start_Time';
+$end_time = $decoded->'Stop_Time';
+$duration = $decoded->'Duration';
+$avg_speed = $decoded->'Avg_Speed';
+$data_processed = $decoded->'Processed';
+$data_total = $decoded->'Customer';
+$data_read = $decoded->'Data_Read';
+$data_transferred = $decoded->'Transferred';
+$data_dedupe = $decoded->'DedupeRate';
+$data_compress = $decoded->'CompressionRate';
 
 
 conexaoPDO();
