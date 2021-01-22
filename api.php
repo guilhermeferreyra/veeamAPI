@@ -82,11 +82,38 @@ catch ( PDOException $e )
 
 $pdo->exec("set names utf8");
 
-$sql = "INSERT INTO veeam_api(customer,last_status,start_time,end_time,duration,avg_speed,data_processed,data_total,data_read,data_transferred,data_dedupe,data_compress,job_name) VALUES(:customer, :last_status, :start_time, :end_time, :duration, :avg_speed, :data_processed, :data_total, :data_read, :data_transferred, :data_dedupe, :data_compress, :job_name)";
+$sql = "INSERT INTO backup_jobs( 
+    customer,
+    last_status,
+    start_time,
+    end_time,
+    duration,
+    avg_speed,
+    data_processed,
+    data_total,
+    data_read,
+    data_transferred,
+    data_dedupe,
+    data_compress,
+    job_name) 
+VALUES(
+    :customer,
+    :last_status,
+    :start_time,
+    :end_time,
+    :duration,
+    :avg_speed,
+    :data_processed,
+    :data_total,
+    :data_read,
+    :data_transferred,
+    :data_dedupe,
+    :data_compress,
+    :job_name)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':customer', $customer);
-$stmt->bindParam(':state', $last_status);
+$stmt->bindParam(':last_status', $last_status);
 $stmt->bindParam(':start_time', $start_time);
 $stmt->bindParam(':end_time', $end_time);
 $stmt->bindParam(':duration', $duration);
