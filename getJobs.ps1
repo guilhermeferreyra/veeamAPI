@@ -22,13 +22,15 @@ foreach($session in $backupSessions){
   if ($session.Progress.ReadSize -eq 0){$compress = 0}
   Else {$compress = [string][Math]::Round($session.BackupStats.GetCompressX(),1) +"x"}
   
+  
   $objSession = New-Object -TypeName PSObject
   $objSession | Add-Member -MemberType NoteProperty -Name Job_Name -Value $session.Name
   $objSession | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
   $objSession | Add-Member -MemberType NoteProperty -Name State -Value ([string]$session.Info.Result)
   $objSession | Add-Member -MemberType NoteProperty -Name Start_Time -Value ([datetime]$session.CreationTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
   $objSession | Add-Member -MemberType NoteProperty -Name Stop_Time -Value ([datetime]$session.EndTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
-  $objSession | Add-Member -MemberType NoteProperty -Name Duration -Value (Get-Duration -ts $session.Progress.Duration)
+  #$objSession | Add-Member -MemberType NoteProperty -Name Duration -Value (Get-Duration -ts $session.Progress.Duration)
+  $objSession | Add-Member -MemberType NoteProperty -Name Duration -Value $session.Progress.Duration.TotalSeconds
   $objSession | Add-Member -MemberType NoteProperty -Name Avg_Speed -Value ([Math]::Round($session.Progress.AvgSpeed/1MB,2))
   $objSession | Add-Member -MemberType NoteProperty -Name Total -Value ([Math]::Round($session.Progress.ProcessedSize/1GB,2))
   $objSession | Add-Member -MemberType NoteProperty -Name Processed -Value ([Math]::Round($session.Progress.ProcessedUsedSize/1GB,2))
