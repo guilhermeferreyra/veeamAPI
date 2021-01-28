@@ -17,7 +17,7 @@ $backupSessions = @($backupSessions | Where-Object {($_.EndTime -ge (Get-Date).A
 foreach($session in $backupSessions){
   
   if ($session.Progress.ReadSize -eq 0){$dedupe = 0} 
-  Else {$dedup = [string][Math]::Round($session.BackupStats.GetDedupeX(),1) +"x"}
+  Else {$dedupe = [string][Math]::Round($session.BackupStats.GetDedupeX(),1) +"x"}
   
   if ($session.Progress.ReadSize -eq 0){$compress = 0}
   Else {$compress = [string][Math]::Round($session.BackupStats.GetCompressX(),1) +"x"}
