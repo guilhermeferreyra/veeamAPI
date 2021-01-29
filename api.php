@@ -13,6 +13,7 @@ $decoded = json_decode($content);
 
 
 $customer = $decoded->Customer;
+$session_id = $decoded->SessionID;
 $job_name = $decoded->Job_Name;
 $last_status = $decoded->State;
 $start_time = $decoded->Start_Time;
@@ -41,6 +42,7 @@ $pdo->exec("set names utf8");
 
 $sql = "INSERT INTO backup_jobs( 
     customer,
+    ses_id,
     last_status,
     start_time,
     end_time,
@@ -55,6 +57,7 @@ $sql = "INSERT INTO backup_jobs(
     job_name) 
 VALUES(
     :customer,
+    :ses_id,
     :last_status,
     :start_time,
     :end_time,
@@ -70,6 +73,7 @@ VALUES(
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':customer', $customer);
+$stmt->bindParam(':ses_id', $session_id);
 $stmt->bindParam(':last_status', $last_status);
 $stmt->bindParam(':start_time', $start_time);
 $stmt->bindParam(':end_time', $end_time);
@@ -91,5 +95,5 @@ if ( ! $result )
     exit;
 }
  
-echo $stmt->rowCount() . "linhas inseridas";
+echo $stmt->rowCount() . "linhas inseridas\n";
 ?>

@@ -6,10 +6,11 @@ $HourstoCheck = 720
 $credentials = "C:\Users\guilherme.ferreira\cred.txt"
 #endregion
 
+#region Script
+Add-PSSnapin VeeamPSSnapin
 Disconnect-VBRServer
 Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
 
-#region Script
 $backupSessions = Get-VBRBackupSession
 
 $backupSessions = @($backupSessions | Where-Object {($_.EndTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.CreationTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.State -eq "Working") -and $_.JobType -eq "Backup"})
@@ -25,6 +26,7 @@ foreach($session in $backupSessions){
   
   $objSession = New-Object -TypeName PSObject
   $objSession | Add-Member -MemberType NoteProperty -Name Job_Name -Value $session.Name
+  $objSession | Add-Member -MemberType NoteProperty -Name SessionID -Value ([string]$session.Id)
   $objSession | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
   $objSession | Add-Member -MemberType NoteProperty -Name State -Value ([string]$session.Info.Result)
   $objSession | Add-Member -MemberType NoteProperty -Name Start_Time -Value ([datetime]$session.CreationTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
@@ -38,6 +40,8 @@ foreach($session in $backupSessions){
   $objSession | Add-Member -MemberType NoteProperty -Name Transferred -Value ([Math]::Round($session.Progress.TransferedSize/1GB,2))
   $objSession | Add-Member -MemberType NoteProperty -Name DedupeRate -Value $dedupe
   $objSession | Add-Member -MemberType NoteProperty -Name CompressionRate -Value $compress
+  
+  $objSession | ConvertTo-Json
   
   $post = Invoke-WebRequest -Uri $APIendpoint -Method Post -Body ($objSession | ConvertTo-Json) -ContentType 'application/json'
 }
