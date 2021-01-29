@@ -4,6 +4,11 @@ $veeamDeployment = "Infiniit"#+ $env:COMPUTERNAME
 $APIendpoint = "http://localhost/veeamAPI/api.php"
 $HourstoCheck = 720
 $credentials = "C:\Users\guilherme.ferreira\cred.txt"
+
+Add-PSSnapin VeeamPSSnapin
+Disconnect-VBRServer
+Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
+
 #endregion
 
 #region Script
