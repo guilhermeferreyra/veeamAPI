@@ -41,7 +41,7 @@ catch ( PDOException $e )
 
 $pdo->exec("set names utf8");
 
-$sql = "INSERT INTO backup_jobs( 
+$sql = "INSERT INTO backup_sessions( 
     customer,
     job_id,
     ses_id,
