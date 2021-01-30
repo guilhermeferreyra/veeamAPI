@@ -27,8 +27,7 @@ foreach($session in $backupSessions){
   
   if ($session.Progress.ReadSize -eq 0){$compress = 0}
   Else {$compress = [string][Math]::Round($session.BackupStats.GetCompressX(),1) +"x"}
-  
-  
+    
   $objSession = New-Object -TypeName PSObject
   $objSession | Add-Member -MemberType NoteProperty -Name Job_Name -Value $session.Name
   $objSession | Add-Member -MemberType NoteProperty -Name SessionID -Value ([string]$session.Id)
@@ -45,9 +44,8 @@ foreach($session in $backupSessions){
   $objSession | Add-Member -MemberType NoteProperty -Name Transferred -Value ([Math]::Round($session.Progress.TransferedSize/1GB,2))
   $objSession | Add-Member -MemberType NoteProperty -Name DedupeRate -Value $dedupe
   $objSession | Add-Member -MemberType NoteProperty -Name CompressionRate -Value $compress
-  
-   
-  $post = Invoke-WebRequest -Uri $APIendpoint -Method Post -Body ($objSession | ConvertTo-Json) -ContentType 'application/json'
+    
+  Invoke-WebRequest -Uri $APIendpoint -Method Post -Body ($objSession | ConvertTo-Json) -ContentType 'application/json'
 }
 #endregion
 
