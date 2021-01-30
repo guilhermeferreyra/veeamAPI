@@ -27,11 +27,11 @@ foreach($session in $backupSessions){
   $objSession = New-Object -TypeName PSObject
   $objSession | Add-Member -MemberType NoteProperty -Name Job_Name -Value $session.Name
   $objSession | Add-Member -MemberType NoteProperty -Name SessionID -Value ([string]$session.Id)
+  $objSession | Add-Member -MemberType NoteProperty -Name JobID -Value ([string]$session.Info.JobId)
   $objSession | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
   $objSession | Add-Member -MemberType NoteProperty -Name State -Value ([string]$session.Info.Result)
   $objSession | Add-Member -MemberType NoteProperty -Name Start_Time -Value ([datetime]$session.CreationTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
   $objSession | Add-Member -MemberType NoteProperty -Name Stop_Time -Value ([datetime]$session.EndTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
-  #$objSession | Add-Member -MemberType NoteProperty -Name Duration -Value (Get-Duration -ts $session.Progress.Duration)
   $objSession | Add-Member -MemberType NoteProperty -Name Duration -Value $session.Progress.Duration.TotalSeconds
   $objSession | Add-Member -MemberType NoteProperty -Name Avg_Speed -Value ([Math]::Round($session.Progress.AvgSpeed/1MB,2))
   $objSession | Add-Member -MemberType NoteProperty -Name Total -Value ([Math]::Round($session.Progress.ProcessedSize/1GB,2))
@@ -41,8 +41,7 @@ foreach($session in $backupSessions){
   $objSession | Add-Member -MemberType NoteProperty -Name DedupeRate -Value $dedupe
   $objSession | Add-Member -MemberType NoteProperty -Name CompressionRate -Value $compress
   
-  $objSession | ConvertTo-Json
-  
+   
   $post = Invoke-WebRequest -Uri $APIendpoint -Method Post -Body ($objSession | ConvertTo-Json) -ContentType 'application/json'
 }
 #endregion
