@@ -2,7 +2,7 @@
 $veeamServer = "denver"
 $veeamDeployment = "Infiniit"#+ $env:COMPUTERNAME
 $APIendpoint = "http://localhost/veeamAPI/api.php"
-$HourstoCheck = 720
+$HourstoCheck = 1720
 $credentials = "C:\Users\guilherme.ferreira\cred.txt"
 
 Add-PSSnapin VeeamPSSnapin
