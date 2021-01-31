@@ -1,8 +1,8 @@
 #region Config
 $veeamServer = "denver"
 $veeamDeployment = "Infiniit"#+ $env:COMPUTERNAME
-$APIendpoint = "http://localhost/veeamAPI/api.php"
-$HourstoCheck = 1720
+$APIendpoint = "http://localhost/veeamAPI/"
+$HourstoCheck = 24
 $credentials = "C:\Users\guilherme.ferreira\cred.txt"
 
 Add-PSSnapin VeeamPSSnapin
@@ -12,9 +12,6 @@ Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credent
 #endregion
 
 #region Script
-Add-PSSnapin VeeamPSSnapin
-Disconnect-VBRServer
-Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
 
 $backupSessions = Get-VBRBackupSession
 
@@ -45,7 +42,7 @@ foreach($session in $backupSessions){
   $objSession | Add-Member -MemberType NoteProperty -Name DedupeRate -Value $dedupe
   $objSession | Add-Member -MemberType NoteProperty -Name CompressionRate -Value $compress
     
-  Invoke-WebRequest -Uri $APIendpoint -Method Post -Body ($objSession | ConvertTo-Json) -ContentType 'application/json'
+  Invoke-WebRequest -Uri $APIendpoint/sendSession.php -Method Post -Body ($objSession | ConvertTo-Json) -ContentType 'application/json' 
 }
 #endregion
 
@@ -59,3 +56,19 @@ function Get-Duration {
   "{0}{1}:{2,2:D2}:{3,2:D2}" -f $days,$ts.Hours,$ts.Minutes,$ts.Seconds
 }
 #endregion
+
+$backupJobs = Get-VBRJob
+$backupJobs = @($backupJobs | Where-Object -Property TypeToString -NotLike "*Copy")
+
+foreach($job in $backupJobs){
+  $objJob = New-Object -TypeName PSObject
+  $objJob | Add-Member -MemberType NoteProperty -Name JobName -Value $job.Name
+  $objJob | Add-Member -MemberType NoteProperty -Name Uid -Value $job.Uid.Uid
+  $objJob | Add-Member -MemberType NoteProperty -Name LatestRunLocal -Value ([datetime]$session.CreationTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
+  $objJob | Add-Member -MemberType NoteProperty -Name LatestStatus -Value ([string]$job.Info.LatestStatus)
+
+  #Invoke-WebRequest -Uri $APIendpoint/sendSession.php -Method Post -Body ($objJob | ConvertTo-Json) -ContentType 'application/json'.
+  $objJob | ConvertTo-Json 
+}
+
+#Disconnect-VBRServer
