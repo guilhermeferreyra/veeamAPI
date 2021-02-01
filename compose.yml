@@ -32,8 +32,8 @@ services:
    expose:
    - 3306
 
-   grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    expose
-    - 3000
+  grafana:
+   image: grafana/grafana:latest
+   container_name: grafana
+   expose
+   - 3000
