@@ -13,7 +13,7 @@ services:
 
   php:
    image: php:7.3-fpm-alpine
-   container_name: PHP7
+   container_name: php
    volumes:
    - /public:/public
    depends_on:
@@ -25,15 +25,15 @@ services:
    volumes:
     - /var/lib/mysql:/var/lib/mysql
    environment:
-    MYSQL_RANDOM_ROOT_PASSWORD: 1
+    MYSQL_RANDOM_ROOT_PASSWORD: 0
     MYSQL_DATABASE: veeam_api
     MYSQL_USER: infiniit
-    MYSQL_PASSWORD: 1nfini!t
+    MYSQL_PASSWORD: '1nfini!t'
    expose:
    - 3306
 
   grafana:
-   image: grafana/grafana:latest
+   image: grafana/grafana
    container_name: grafana
-   expose
-   - 3000
+   ports:
+   - "3000:3000"

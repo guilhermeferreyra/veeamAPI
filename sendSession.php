@@ -32,7 +32,7 @@ echo $last_status."\n";
 
 try
 {
-    $pdo = new PDO( 'mysql:host=' . "localhost" . ';dbname=' . "veeam_api", "root", "" );
+    $pdo = new PDO( 'mysql:host=' . "mariadb" . ';dbname=' . "veeam_api", "root", "" );
 }
 catch ( PDOException $e )
 {
