@@ -2,17 +2,16 @@ version: "3.8"
   
 services:
   web:
-   image: nginx:latest
+   build: ./components/nginx/Dockerfile
    container_name: nginx
    ports:
-   - "8080:8080"
+   - 8080:8080
    volumes:
    - /public:/public
-   - /usr/share/nginx/site.conf:/etc/nginx/conf.d/site.conf
    - /usr/share/nginx/logs:/var/log/nginx/
 
   php:
-   image: php:7.3-fpm-alpine
+   build: ./components/php/Dockerfile
    container_name: php
    volumes:
    - /public:/public
@@ -20,11 +19,12 @@ services:
    - db
 
   db:
-   image: mariadb:latest
+   build: ./components/db/Dockerfile
    container_name: mariadb
    volumes:
     - /var/lib/mysql:/var/lib/mysql
    environment:
+    MYSQL_ALLOW_EMPTY_PASSWORD: yes
     MYSQL_ROOT_PASSWORD: ""
     MYSQL_DATABASE: veeam_api
     MYSQL_USER: infiniit
@@ -33,7 +33,7 @@ services:
    - 3306
 
   grafana:
-   image: grafana/grafana
+   image: grafana/grafana:latest
    container_name: grafana
    ports:
-   - "3000:3000"
+   - 3000:3000
