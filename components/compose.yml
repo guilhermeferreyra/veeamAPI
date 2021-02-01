@@ -25,7 +25,7 @@ services:
    volumes:
     - /var/lib/mysql:/var/lib/mysql
    environment:
-    MYSQL_RANDOM_ROOT_PASSWORD: 0
+    MYSQL_ROOT_PASSWORD: ""
     MYSQL_DATABASE: veeam_api
     MYSQL_USER: infiniit
     MYSQL_PASSWORD: '1nfini!t'
