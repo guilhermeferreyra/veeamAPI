@@ -2,7 +2,7 @@ version: "3.8"
   
 services:
   web:
-   build: ./components/nginx/Dockerfile
+   build: components/nginx/Dockerfile
    container_name: nginx
    ports:
    - 8080:8080
