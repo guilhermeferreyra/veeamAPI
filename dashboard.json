@@ -1,0 +1,1525 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": 1,
+    "iteration": 1612141236381,
+    "links": [],
+    "panels": [
+      {
+        "aliasColors": {
+          "Dados processados": "semi-dark-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "unit": "decgbytes"
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 4,
+        "gridPos": {
+          "h": 7,
+          "w": 8,
+          "x": 0,
+          "y": 0
+        },
+        "hiddenSeries": false,
+        "id": 9,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": false,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.3.7",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT\n  start_time AS \"time\",\n  data_processed AS \"Dados processados\"\nFROM backup_sessions\nWHERE\n  customer = \"$cliente\"\nORDER BY start_time",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "data_processed"
+                  ],
+                  "type": "column"
+                },
+                {
+                  "params": [
+                    "avg"
+                  ],
+                  "type": "aggregate"
+                },
+                {
+                  "params": [
+                    "data_processed"
+                  ],
+                  "type": "alias"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "datatype": "varchar",
+                "name": "",
+                "params": [
+                  "customer",
+                  "=",
+                  "'Infiniit'"
+                ],
+                "type": "expression"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": "$dias d",
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Dados Processados nos últimos $dias dias",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "decgbytes",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {
+          "Dados processados": "semi-dark-blue",
+          "Dados transferidos": "dark-green"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "unit": "decgbytes"
+          },
+          "overrides": []
+        },
+        "fill": 2,
+        "fillGradient": 4,
+        "gridPos": {
+          "h": 7,
+          "w": 8,
+          "x": 8,
+          "y": 0
+        },
+        "hiddenSeries": false,
+        "id": 10,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": false,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.3.7",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT\n  start_time AS \"time\",\n  data_transferred AS \"Dados transferidos\"\nFROM backup_sessions\nWHERE\n  customer = \"$cliente\"\nORDER BY start_time",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "data_processed"
+                  ],
+                  "type": "column"
+                },
+                {
+                  "params": [
+                    "avg"
+                  ],
+                  "type": "aggregate"
+                },
+                {
+                  "params": [
+                    "data_processed"
+                  ],
+                  "type": "alias"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "datatype": "varchar",
+                "name": "",
+                "params": [
+                  "customer",
+                  "=",
+                  "'Infiniit'"
+                ],
+                "type": "expression"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": "$dias d",
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Dados transferidos nos últimos $dias dias",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "decgbytes",
+            "label": null,
+            "logBase": 2,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "decimals": 2,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "decgbytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 16,
+          "y": 0
+        },
+        "id": 4,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "value"
+        },
+        "pluginVersion": "7.3.7",
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              {
+                "params": [
+                  "customer"
+                ],
+                "type": "column"
+              }
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT SUM(data_transferred) as \"Dados transferidos\"\nFROM backup_sessions where customer=\"$cliente\" and start_time >= now() - INTERVAL $dias DAY;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "db_id"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Dados transferidos em $dias dias",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 20,
+          "y": 0
+        },
+        "id": 11,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "count"
+            ],
+            "fields": "/^Status$/",
+            "values": false
+          },
+          "textMode": "value"
+        },
+        "pluginVersion": "7.3.7",
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              {
+                "params": [
+                  "customer"
+                ],
+                "type": "column"
+              }
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT last_status as \"Status\"\nFROM backup_sessions where customer=\"$cliente\" and last_status=\"Success\" and start_time >= now() - INTERVAL $dias DAY;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "db_id"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Backups com SUCESSO em $dias dias",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "decimals": 2,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "decgbytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 16,
+          "y": 3
+        },
+        "id": 5,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "value"
+        },
+        "pluginVersion": "7.3.7",
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              {
+                "params": [
+                  "customer"
+                ],
+                "type": "column"
+              }
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT SUM(data_read) as \"Dados lidos\"\nFROM backup_sessions where customer=\"$cliente\" and start_time >= now() - INTERVAL $dias DAY;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "db_id"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Dados lidos em $dias dias",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Status"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 20,
+          "y": 3
+        },
+        "id": 12,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "count"
+            ],
+            "fields": "/^Status$/",
+            "values": false
+          },
+          "textMode": "value"
+        },
+        "pluginVersion": "7.3.7",
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              {
+                "params": [
+                  "customer"
+                ],
+                "type": "column"
+              }
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT last_status as \"Status\"\nFROM backup_sessions where customer=\"$cliente\" and last_status=\"Failed\" and start_time >= now() - INTERVAL $dias DAY;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "db_id"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Backups com FALHA em $dias dias",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "decimals": 2,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "decgbytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 16,
+          "y": 6
+        },
+        "id": 6,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "value"
+        },
+        "pluginVersion": "7.3.7",
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              {
+                "params": [
+                  "customer"
+                ],
+                "type": "column"
+              }
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT SUM(data_processed) as \"Dados Processados\"\nFROM backup_sessions where customer=\"$cliente\" and start_time >= now() - INTERVAL $dias DAY;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "db_id"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Dados Processados em $dias dias",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Status"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-yellow",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 20,
+          "y": 6
+        },
+        "id": 13,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "count"
+            ],
+            "fields": "/^Status$/",
+            "values": false
+          },
+          "textMode": "value"
+        },
+        "pluginVersion": "7.3.7",
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              {
+                "params": [
+                  "customer"
+                ],
+                "type": "column"
+              }
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT last_status as \"Status\"\nFROM backup_sessions where customer=\"$cliente\" and last_status=\"Warning\" and start_time >= now() - INTERVAL $dias DAY;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "db_id"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Backups com ALERTA em $dias dias",
+        "type": "stat"
+      },
+      {
+        "datasource": "MySQL",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "light-blue",
+              "mode": "fixed"
+            },
+            "custom": {
+              "align": "left",
+              "displayMode": "color-text",
+              "filterable": false
+            },
+            "decimals": 1,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Processado"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 90
+                },
+                {
+                  "id": "unit",
+                  "value": "decgbytes"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Leitura"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 78
+                },
+                {
+                  "id": "unit",
+                  "value": "decgbytes"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Transferido"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 83
+                },
+                {
+                  "id": "unit",
+                  "value": "decgbytes"
+                },
+                {
+                  "id": "decimals",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Status"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 129
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Total"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 104
+                },
+                {
+                  "id": "unit",
+                  "value": "decgbytes"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Velocidade média"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 124
+                },
+                {
+                  "id": "unit",
+                  "value": "MBs"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Início"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 146
+                },
+                {
+                  "id": "unit",
+                  "value": "dateTimeAsIso"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Duração"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 71
+                },
+                {
+                  "id": "unit",
+                  "value": "dthms"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "data_transferred"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 138
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Velocidade média MB/s"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 165
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Tarefa"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 219
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Status"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 186
+                },
+                {
+                  "id": "mappings",
+                  "value": []
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Duração"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 86
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Velocidade média - MB/s"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 178
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Processado - GB"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 123
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Leitura - GB"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 97
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Transferido - GB"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 121
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Compressão"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Compressão 2"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 187
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Leitura"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 98
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Total"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 71
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Deduplicação"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 104
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 14,
+          "w": 16,
+          "x": 0,
+          "y": 7
+        },
+        "id": 2,
+        "maxDataPoints": 30,
+        "options": {
+          "showHeader": true,
+          "sortBy": [
+            {
+              "desc": true,
+              "displayName": "Início"
+            }
+          ]
+        },
+        "pluginVersion": "7.3.7",
+        "targets": [
+          {
+            "format": "table",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT job_name as \"Tarefa\", avg_speed AS \"Velocidade média\", start_time as \"Início\", duration as \"Duração\", data_total as \"Total\", data_processed as \"Processado\", data_read as \"Leitura\", data_transferred as \"Transferido\", data_compress as \"Compressão\", data_dedupe as \"Deduplicação\", last_status as \"Status\"\nFROM backup_sessions where customer=\"$cliente\" and start_time >= now() - INTERVAL $dias DAY;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "avg_speed"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "avg_speed",
+            "timeColumnType": "float",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transformations": [],
+        "transparent": true,
+        "type": "table"
+      },
+      {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "dthms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 8,
+          "x": 16,
+          "y": 9
+        },
+        "id": 7,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "fields": "/^Duração$/",
+            "values": true
+          },
+          "textMode": "value"
+        },
+        "pluginVersion": "7.3.7",
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              {
+                "params": [
+                  "customer"
+                ],
+                "type": "column"
+              }
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT SUM(duration) as \"Duração\"\nFROM backup_sessions where customer=\"$cliente\" and start_time >= now() - INTERVAL $dias DAY;",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "db_id"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Tempo de backup em $dias dias",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "mappings": [
+              {
+                "from": "",
+                "id": 1,
+                "text": "",
+                "to": "",
+                "type": 1,
+                "value": ""
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "semi-dark-green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Rotina"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "light-blue",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 8,
+          "x": 16,
+          "y": 12
+        },
+        "id": 14,
+        "options": {
+          "showHeader": true
+        },
+        "pluginVersion": "7.3.7",
+        "targets": [
+          {
+            "format": "table",
+            "group": [
+              {
+                "params": [
+                  "customer"
+                ],
+                "type": "column"
+              }
+            ],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT job_name AS Rotina, latest_status AS Status\nFROM backup_jobs where customer=\"$cliente\"",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "db_id"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "backup_jobs",
+            "timeColumn": "start_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Status do ultimo backup",
+        "type": "table"
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 26,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": null,
+          "current": {
+            "selected": false,
+            "text": "30",
+            "value": "30"
+          },
+          "error": null,
+          "hide": 0,
+          "includeAll": false,
+          "label": "Dias",
+          "multi": false,
+          "name": "dias",
+          "options": [
+            {
+              "selected": false,
+              "text": "1",
+              "value": "1"
+            },
+            {
+              "selected": false,
+              "text": "2",
+              "value": "2"
+            },
+            {
+              "selected": false,
+              "text": "5",
+              "value": "5"
+            },
+            {
+              "selected": false,
+              "text": "7",
+              "value": "7"
+            },
+            {
+              "selected": false,
+              "text": "10",
+              "value": "10"
+            },
+            {
+              "selected": false,
+              "text": "15",
+              "value": "15"
+            },
+            {
+              "selected": false,
+              "text": "20",
+              "value": "20"
+            },
+            {
+              "selected": true,
+              "text": "30",
+              "value": "30"
+            }
+          ],
+          "query": "1,2,5,7,10,15,20,30",
+          "queryValue": "",
+          "skipUrlSync": false,
+          "type": "custom"
+        },
+        {
+          "allValue": null,
+          "current": {
+            "selected": true,
+            "text": "Infiniit",
+            "value": "Infiniit"
+          },
+          "datasource": "MySQL",
+          "definition": "SELECT customer FROM backup_jobs",
+          "error": null,
+          "hide": 0,
+          "includeAll": false,
+          "label": null,
+          "multi": false,
+          "name": "cliente",
+          "options": [],
+          "query": "SELECT customer FROM backup_jobs",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-30d",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Resumo de Backup",
+    "uid": "3GgRL8fMz",
+    "version": 25
+  }
