@@ -33,8 +33,6 @@ services:
     - MYSQL_DATABASE=veeam_api
     - MYSQL_USER=infiniit
     - MYSQL_PASSWORD=infiniit
-   command:
-    - "mysql -uroot -padmin < /veeamAPI.sql"
     expose:
     - 3306
 
