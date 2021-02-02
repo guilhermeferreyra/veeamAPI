@@ -26,8 +26,6 @@ services:
    restart: always
    volumes:
     - /var/lib/mysql:/var/lib/mysql
-   command:
-    - "mysql -uroot -padmin < /veeamAPI.sql"
    environment:
     - MYSQL_ROOT_PASSWORD=admin
     - MYSQL_INITDB_SKIP_TZINFO=1
