@@ -11,7 +11,7 @@ services:
    - /usr/share/nginx/logs:/var/log/nginx/
 
   php:
-   build: ./components/php/Dockerfile
+   build: ./components/php
    container_name: php
    volumes:
    - /public:/public
@@ -19,7 +19,7 @@ services:
    - db
 
   db:
-   build: ./components/db/Dockerfile
+   build: ./components/db
    container_name: mariadb
    volumes:
     - /var/lib/mysql:/var/lib/mysql

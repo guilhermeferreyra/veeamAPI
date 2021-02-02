@@ -1,2 +1,2 @@
 FROM mariadb:latest
-RUN mysql -uroot -p  < ./veeamAPI.sql
+RUN mysql -uroot -p  < veeamAPI.sql
