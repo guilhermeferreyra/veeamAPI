@@ -4,6 +4,7 @@ services:
   web:
    build: ./components/nginx
    container_name: nginx
+   restart: always
    ports:
    - 8080:8080
    volumes:
@@ -12,6 +13,7 @@ services:
 
   php:
    build: ./components/php
+   restart: always
    container_name: php
    volumes:
    - /public:/public
@@ -21,13 +23,14 @@ services:
   db:
    build: ./components/db
    container_name: mariadb
+   restart: always
    volumes:
     - /var/lib/mysql:/var/lib/mysql
    environment:
-    - MYSQL_ROOT_PASSWORD: 'infiniit'
-    - MYSQL_DATABASE: 'veeam_api'
-    - MYSQL_USER: 'infiniit'
-    - MYSQL_PASSWORD: 'infiniit'
+    MYSQL_ROOT_PASSWORD: 'infiniit'
+    MYSQL_DATABASE: 'veeam_api'
+    MYSQL_USER: 'infiniit'
+    MYSQL_PASSWORD: 'infiniit'
    expose:
    - 3306
 
