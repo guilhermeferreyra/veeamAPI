@@ -1,2 +1,2 @@
-FROM mysql:8.0
+FROM mariadb:latest
 COPY veeamAPI.sql /
