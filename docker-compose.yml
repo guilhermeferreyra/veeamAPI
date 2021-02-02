@@ -34,7 +34,7 @@ services:
     - MYSQL_USER=infiniit
     - MYSQL_PASSWORD=infiniit
    command:
-    - "mysql -uroot -p"$MYSQL_ROOT_PASSWORD" < /veeamAPI.sql"
+    - 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" < /veeamAPI.sql'
     expose:
     - 3306
 
