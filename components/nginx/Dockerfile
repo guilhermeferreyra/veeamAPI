@@ -1,3 +1,3 @@
 FROM nginx:latest
 RUN echo "" > /etc/nginx/conf.d/default.conf
-COPY ./components/nginx/site.conf /etc/nginx/conf.d/
+COPY site.conf /etc/nginx/conf.d/
