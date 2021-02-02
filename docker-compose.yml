@@ -24,7 +24,6 @@ services:
    volumes:
     - /var/lib/mysql:/var/lib/mysql
    environment:
-    - MYSQL_ALLOW_EMPTY_PASSWORD:
     - MYSQL_ROOT_PASSWORD: infiniit
     - MYSQL_DATABASE: veeam_api
     - MYSQL_USER: infiniit
