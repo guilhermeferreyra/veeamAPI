@@ -27,11 +27,12 @@ services:
    volumes:
     - /var/lib/mysql:/var/lib/mysql
    environment:
-    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-    - MYSQL_ROOT_PASSWORD=
-    - MYSQL_DATABASE=veeam_api
-    - MYSQL_USER=infiniit
-    - MYSQL_PASSWORD=
+    - MYSQL_ROOT_PASSWORD=admin
+    #- MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    #- MYSQL_ROOT_PASSWORD=
+    #- MYSQL_DATABASE=veeam_api
+    #- MYSQL_USER=infiniit
+    #- MYSQL_PASSWORD=
    expose:
    - 3306
 
