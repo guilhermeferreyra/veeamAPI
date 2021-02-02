@@ -29,7 +29,6 @@ services:
     MYSQL_DATABASE: veeam_api
     MYSQL_USER: infiniit
     MYSQL_PASSWORD: '1nfini!t'
-   command: mysql -uroot -p  < veeamAPI.sql
    expose:
    - 3306
 
