@@ -35,8 +35,6 @@ services:
    - MYSQL_PASSWORD=infiniit
    expose:
    - 3306
-   command: 
-   - "mysql -uroot -padmin < /veeam_api.sql"
     
   grafana:
    image: grafana/grafana:latest
