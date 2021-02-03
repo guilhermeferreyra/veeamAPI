@@ -34,10 +34,14 @@ services:
     - MYSQL_USER=infiniit
     - MYSQL_PASSWORD=infiniit
    expose:
+    command: 
+      - 'mysql -uroot -padmin < /veeam_api.sql'
    - 3306
 
   grafana:
    image: grafana/grafana:latest
    container_name: grafana
+   volumes:
+    /grafana:/var/lib/grafana 
    ports:
    - 3000:3000
