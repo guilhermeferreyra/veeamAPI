@@ -21,7 +21,7 @@ $customer = $decoded->Customer;
 
 try
 {
-    $pdo = new PDO( 'mysql:host=' . "localhost" . ';dbname=' . "veeam_api", "root", "admin" );
+    $pdo = new PDO( 'mysql:host=' . "mariadb" . ';dbname=' . "veeam_api", "root", "admin" );
 }
 catch ( PDOException $e )
 {
