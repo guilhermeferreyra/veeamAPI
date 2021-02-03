@@ -1,7 +1,7 @@
 #region Config
 $veeamServer = "denver"
 $veeamDeployment = "Infiniit"#+ $env:COMPUTERNAME
-$APIendpoint = "http://10.0.1.220:8080/veeamAPI/"
+$APIendpoint = "http://10.0.1.220:8080/"
 $HourstoCheck = 720
 $credentials = "C:\Users\guilherme.ferreira\cred.txt"
 
@@ -68,7 +68,7 @@ foreach($job in $backupJobs){
   $objJob | Add-Member -MemberType NoteProperty -Name LatestRunLocal -Value ([datetime]$session.CreationTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
   $objJob | Add-Member -MemberType NoteProperty -Name LatestStatus -Value ([string]$job.Info.LatestStatus)
   $objJob | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
-  $objJob | Add-Member -MemberType NoteProperty -Name JobHash -Value $objJob.Uid + $objJob.LatestRunLocal
+  $objJob | Add-Member -MemberType NoteProperty -Name JobHash -Value ([string]$objJob.Uid + [string]$objJob.LatestRunLocal)
 
   Invoke-WebRequest -Uri ($APIendpoint+"/sendJob.php") -Method Post -Body ($objJob | ConvertTo-Json) -ContentType 'application/json'
   $objJob | ConvertTo-Json 
