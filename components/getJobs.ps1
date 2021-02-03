@@ -43,6 +43,7 @@ foreach($session in $backupSessions){
   $objSession | Add-Member -MemberType NoteProperty -Name CompressionRate -Value $compress
     
   Invoke-WebRequest -Uri ($APIendpoint+"/sendSession.php") -Method Post -Body ($objSession | ConvertTo-Json) -ContentType 'application/json' 
+  #$objSession | ConvertTo-Json
 }
 #endregion
 
@@ -71,7 +72,7 @@ foreach($job in $backupJobs){
   $objJob | Add-Member -MemberType NoteProperty -Name JobHash -Value ([string]$objJob.Uid + [string]$objJob.LatestRunLocal)
 
   Invoke-WebRequest -Uri ($APIendpoint+"/sendJob.php") -Method Post -Body ($objJob | ConvertTo-Json) -ContentType 'application/json'
-  $objJob | ConvertTo-Json 
+  #$objJob | ConvertTo-Json 
 }
 
 #Disconnect-VBRServer
