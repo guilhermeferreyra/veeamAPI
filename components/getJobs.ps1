@@ -1,8 +1,8 @@
 #region Config
 $veeamServer = "denver"
 $veeamDeployment = "Infiniit"#+ $env:COMPUTERNAME
-$APIendpoint = "http://localhost/veeamAPI/"
-$HourstoCheck = 24
+$APIendpoint = "http://10.0.1.220:8080/veeamAPI/"
+$HourstoCheck = 720
 $credentials = "C:\Users\guilherme.ferreira\cred.txt"
 
 Add-PSSnapin VeeamPSSnapin
