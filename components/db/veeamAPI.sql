@@ -26,8 +26,9 @@ CREATE TABLE IF NOT EXISTS `backup_jobs` (
   `job_uid` varchar(50) NOT NULL,
   `latest_run` datetime NOT NULL,
   `latest_status` varchar(50) NOT NULL,
+  `job_hash` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `job_uid` (`job_uid`)
+  UNIQUE KEY `job_hash` (`job_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Exportação de dados foi desmarcado.
