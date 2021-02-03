@@ -68,6 +68,7 @@ foreach($job in $backupJobs){
   $objJob | Add-Member -MemberType NoteProperty -Name LatestRunLocal -Value ([datetime]$session.CreationTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
   $objJob | Add-Member -MemberType NoteProperty -Name LatestStatus -Value ([string]$job.Info.LatestStatus)
   $objJob | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
+  $objJob | Add-Member -MemberType NoteProperty -Name JobHash -Value $objJob.Uid + $objJob.LatestRunLocal
 
   Invoke-WebRequest -Uri ($APIendpoint+"/sendJob.php") -Method Post -Body ($objJob | ConvertTo-Json) -ContentType 'application/json'
   $objJob | ConvertTo-Json 
