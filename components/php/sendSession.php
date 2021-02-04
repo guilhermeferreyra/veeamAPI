@@ -29,8 +29,6 @@ $data_transferred = $decoded->Transferred;
 $data_dedupe = $decoded->DedupeRate;
 $data_compress = $decoded->CompressionRate;
 
-echo $job_type."\n";
-
 try
 {
     $pdo = new PDO( 'mysql:host=' . "mariadb" . ';dbname=' . "veeam_api", "root", "admin" );
