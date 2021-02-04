@@ -29,7 +29,7 @@ $data_transferred = $decoded->Transferred;
 $data_dedupe = $decoded->DedupeRate;
 $data_compress = $decoded->CompressionRate;
 
-echo $last_status."\n";
+echo $job_type."\n";
 
 try
 {
