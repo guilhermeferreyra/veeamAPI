@@ -7,6 +7,7 @@ $credentials = "C:\Users\guilherme.ferreira\cred.txt"
 
 Add-PSSnapin VeeamPSSnapin
 #Disconnect-VBRServer
+
 Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
 
 #endregion
