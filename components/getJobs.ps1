@@ -3,11 +3,11 @@ $veeamServer = "denver"
 $veeamDeployment = "Infiniit"#+ $env:COMPUTERNAME
 $APIendpoint = "https://veeamapi.infiniit.com.br/"
 $HourstoCheck = 720
-#$credentials = "cred.txt"
+$credentials = "C:\Users\guilherme.ferreira\cred.txt"
 
 Add-PSSnapin VeeamPSSnapin
 #Disconnect-VBRServer
-#Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
+Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
 
 #endregion
 
@@ -27,7 +27,7 @@ foreach($session in $backupSessions){
     
   $objSession = New-Object -TypeName PSObject
   $objSession | Add-Member -MemberType NoteProperty -Name Job_Name -Value $session.Name
-  $objSession | Add-Member -MemberType NoteProperty -Name Job_Type -Value $session.JobType
+  $objSession | Add-Member -MemberType NoteProperty -Name Job_Type -Value ([string]$session.JobType)
   $objSession | Add-Member -MemberType NoteProperty -Name SessionID -Value ([string]$session.Id)
   $objSession | Add-Member -MemberType NoteProperty -Name JobID -Value ([string]$session.Info.JobId)
   $objSession | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
