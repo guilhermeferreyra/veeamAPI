@@ -61,7 +61,7 @@ function Get-Duration {
 #endregion
 
 $backupJobs = Get-VBRJob
-$backupJobs = @($backupJobs | Where-Object -Property TypeToString -NotLike "*Copy")
+#$backupJobs = @($backupJobs | Where-Object -Property TypeToString -NotLike "*Copy")
 
 foreach($job in $backupJobs){
   $objJob = New-Object -TypeName PSObject
