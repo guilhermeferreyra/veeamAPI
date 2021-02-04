@@ -1,13 +1,13 @@
 #region Config
 $veeamServer = "denver"
 $veeamDeployment = "Infiniit"#+ $env:COMPUTERNAME
-$APIendpoint = "http://10.0.1.220:8080/"
+$APIendpoint = "https://veeamapi.infiniit.com.br/"
 $HourstoCheck = 720
-$credentials = "C:\Users\guilherme.ferreira\cred.txt"
+#$credentials = "cred.txt"
 
 Add-PSSnapin VeeamPSSnapin
-Disconnect-VBRServer
-Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
+#Disconnect-VBRServer
+#Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
 
 #endregion
 
@@ -15,7 +15,7 @@ Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credent
 
 $backupSessions = Get-VBRBackupSession
 
-$backupSessions = @($backupSessions | Where-Object {($_.EndTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.CreationTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.State -eq "Working") -and $_.JobType -eq "Backup"})
+$backupSessions = @($backupSessions | Where-Object {($_.EndTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.CreationTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.State -eq "Working") <#-and $_.JobType -eq "Backup"#>})
 
 foreach($session in $backupSessions){
   
@@ -27,6 +27,7 @@ foreach($session in $backupSessions){
     
   $objSession = New-Object -TypeName PSObject
   $objSession | Add-Member -MemberType NoteProperty -Name Job_Name -Value $session.Name
+  $objSession | Add-Member -MemberType NoteProperty -Name Job_Type -Value $session.JobType
   $objSession | Add-Member -MemberType NoteProperty -Name SessionID -Value ([string]$session.Id)
   $objSession | Add-Member -MemberType NoteProperty -Name JobID -Value ([string]$session.Info.JobId)
   $objSession | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment

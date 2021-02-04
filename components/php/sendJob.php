@@ -45,7 +45,9 @@ $sql = "INSERT INTO backup_jobs(
     :job_uid,
     :latest_run,
     :job_hash,
-    :latest_status)";
+    :latest_status)
+    ON DUPLICATE KEY UPDATE
+    :latest_status";
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':job_name', $job_name);

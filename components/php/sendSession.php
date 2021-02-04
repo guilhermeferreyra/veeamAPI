@@ -16,6 +16,7 @@ $customer = $decoded->Customer;
 $session_id = $decoded->SessionID;
 $job_id = $decoded->JobID;
 $job_name = $decoded->Job_Name;
+$job_type = $decoded->JOb_Type;
 $last_status = $decoded->State;
 $start_time = $decoded->Start_Time;
 $end_time = $decoded->Stop_Time;
@@ -44,6 +45,7 @@ $pdo->exec("set names utf8");
 $sql = "INSERT INTO backup_sessions( 
     customer,
     job_id,
+    job_type,
     ses_id,
     last_status,
     start_time,
@@ -60,6 +62,7 @@ $sql = "INSERT INTO backup_sessions(
 VALUES(
     :customer,
     :job_id,
+    :job_type,
     :ses_id,
     :last_status,
     :start_time,
@@ -77,6 +80,7 @@ VALUES(
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':customer', $customer);
 $stmt->bindParam(':job_id', $job_id);
+$stmt->bindParam(':job_type',$job_type);
 $stmt->bindParam(':ses_id', $session_id);
 $stmt->bindParam(':last_status', $last_status);
 $stmt->bindParam(':start_time', $start_time);

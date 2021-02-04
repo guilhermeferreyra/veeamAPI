@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
--- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.17-MariaDB - mariadb.org binary distribution
--- OS do Servidor:               Win64
+-- Servidor:                     10.0.1.220
+-- Versão do servidor:           10.5.8-MariaDB-1:10.5.8+maria~focal - mariadb.org binary distribution
+-- OS do Servidor:               debian-linux-gnu
 -- HeidiSQL Versão:              11.1.0.6116
 -- --------------------------------------------------------
 
@@ -14,7 +14,7 @@
 
 
 -- Copiando estrutura do banco de dados para veeam_api
-CREATE DATABASE IF NOT EXISTS `veeam_api` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE IF NOT EXISTS `veeam_api` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `veeam_api`;
 
 -- Copiando estrutura para tabela veeam_api.backup_jobs
@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `backup_sessions` (
   `job_name` varchar(100) DEFAULT NULL,
   `ses_id` varchar(50) NOT NULL DEFAULT '',
   `job_id` varchar(50) NOT NULL,
+  `job_type` varchar(50) NOT NULL,
   PRIMARY KEY (`db_id`),
   UNIQUE KEY `ses_id` (`ses_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
