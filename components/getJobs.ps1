@@ -3,19 +3,46 @@ $veeamServer = "denver"
 $veeamDeployment = "Infiniit"#+ $env:COMPUTERNAME
 $APIendpoint = "https://veeamapi.infiniit.com.br/"
 $HourstoCheck = 720
-$credentials = "C:\Users\guilherme.ferreira\cred.txt"
+#$credentials = "C:\Users\guilherme.ferreira\cred.txt"
 
 Add-PSSnapin VeeamPSSnapin
 #Disconnect-VBRServer
-
-Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
+#Connect-VBRServer -Server $veeamServer -Credential (Import-CliXml -Path $credentials) -ErrorAction Ignore
 
 #endregion
-
 #region Script
 
-$backupSessions = Get-VBRBackupSession
+$agentJobs = Get-VBRComputerBackupJob
 
+foreach($agentJob in $agentJobs){
+  $objAgentJob = New-Object -TypeName PSObject
+  $objAgentJob | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
+  $objAgentJob | Add-Member -MemberType NoteProperty -Name JobID -Value $agentJob.Id
+  $objAgentJob | Add-Member -MemberType NoteProperty -Name Name -Value $agentJob.Name
+  $objAgentJob | Add-Member -MemberType NoteProperty -Name OSPlatform -Value ([string]$agentJob.OSPlatform)
+  $objAgentJob | Add-Member -MemberType NoteProperty -Name BackupObject -Value $agentJob.BackupObject.Name
+  $objAgentJob | Add-Member -MemberType NoteProperty -Name JobEnabled -Value ([string]$agentJob.JobEnabled)
+ 
+  Invoke-WebRequest -Uri ($APIendpoint+"/sendAgent.php") -Method Post -Body ($objAgentJob | ConvertTo-Json) -ContentType 'application/json'
+}
+
+$agentSessions = Get-VBRComputerBackupJobSession
+$agentSessions = @($agentSessions | Where-Object {($_.CreationTime -ge (Get-Date).AddHours(-$HourstoCheck)) -and $_.State -eq "Stopped"})
+
+foreach($agentSession in $agentSessions){
+
+  $objAgent = New-Object -TypeName PSObject
+  $objAgent | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
+  $objAgent | Add-Member -MemberType NoteProperty -Name CreationTime -Value ([datetime]$agentSession.CreationTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
+  $objAgent | Add-Member -MemberType NoteProperty -Name EndTime -Value ([datetime]$agentSession.EndTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
+  $objAgent | Add-Member -MemberType NoteProperty -Name JobId -Value $agentSession.JobId
+  $objAgent | Add-Member -MemberType NoteProperty -Name Result -Value ([string]$agentSession.result)
+  $objAgent | Add-Member -MemberType NoteProperty -Name SessionId -Value $agentSession.Id
+
+  Invoke-WebRequest -Uri ($APIendpoint+"/sendAgent.php") -Method Post -Body ($objAgent | ConvertTo-Json) -ContentType 'application/json'
+}
+
+$backupSessions = Get-VBRBackupSession
 $backupSessions = @($backupSessions | Where-Object {($_.EndTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.CreationTime -ge (Get-Date).AddHours(-$HourstoCheck) -or $_.State -eq "Working") <#-and $_.JobType -eq "Backup"#>})
 
 foreach($session in $backupSessions){
@@ -47,8 +74,23 @@ foreach($session in $backupSessions){
   Invoke-WebRequest -Uri ($APIendpoint+"/sendSession.php") -Method Post -Body ($objSession | ConvertTo-Json) -ContentType 'application/json' 
   #$objSession | ConvertTo-Json
 }
-#endregion
 
+$backupJobs = Get-VBRJob
+#$backupJobs = @($backupJobs | Where-Object -Property TypeToString -NotLike "*Copy")
+
+foreach($backupJob in $backupJobs){
+  $objJob = New-Object -TypeName PSObject
+  $objJob | Add-Member -MemberType NoteProperty -Name JobName -Value $backupJob.Name
+  $objJob | Add-Member -MemberType NoteProperty -Name JobType -Value $backupJob.TypeToString
+  $objJob | Add-Member -MemberType NoteProperty -Name Uid -Value $backupJob.Uid.Uid
+  $objJob | Add-Member -MemberType NoteProperty -Name LatestRunLocal -Value ([datetime]$backupJob.CreationTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
+  $objJob | Add-Member -MemberType NoteProperty -Name LatestStatus -Value ([string]$backupJob.Info.LatestStatus)
+  $objJob | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
+  $objJob | Add-Member -MemberType NoteProperty -Name JobHash -Value ([string]$objJob.Uid + [string]$objJob.LatestRunLocal)
+
+  Invoke-WebRequest -Uri ($APIendpoint+"/sendJob.php") -Method Post -Body ($objJob | ConvertTo-Json) -ContentType 'application/json'
+}
+#endregion
 #region Functions
 function Get-Duration {
   param ($ts)
@@ -60,21 +102,5 @@ function Get-Duration {
 }
 #endregion
 
-$backupJobs = Get-VBRJob
-#$backupJobs = @($backupJobs | Where-Object -Property TypeToString -NotLike "*Copy")
-
-foreach($job in $backupJobs){
-  $objJob = New-Object -TypeName PSObject
-  $objJob | Add-Member -MemberType NoteProperty -Name JobName -Value $job.Name
-  $objJob | Add-Member -MemberType NoteProperty -Name JobType -Value $job.TypeToString
-  $objJob | Add-Member -MemberType NoteProperty -Name Uid -Value $job.Uid.Uid
-  $objJob | Add-Member -MemberType NoteProperty -Name LatestRunLocal -Value ([datetime]$session.CreationTime | Get-date -Format "yyyy-MM-dd HH:mm:ss")
-  $objJob | Add-Member -MemberType NoteProperty -Name LatestStatus -Value ([string]$job.Info.LatestStatus)
-  $objJob | Add-Member -MemberType NoteProperty -Name Customer -Value $veeamDeployment
-  $objJob | Add-Member -MemberType NoteProperty -Name JobHash -Value ([string]$objJob.Uid + [string]$objJob.LatestRunLocal)
-
-  Invoke-WebRequest -Uri ($APIendpoint+"/sendJob.php") -Method Post -Body ($objJob | ConvertTo-Json) -ContentType 'application/json'
-  #$objJob | ConvertTo-Json 
-}
 
 #Disconnect-VBRServer
